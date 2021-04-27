@@ -85,5 +85,6 @@ func main() {
 			},
 		},
 	}
+	fmt.Println(isSameTree(root1, root2))
 	fmt.Println(isSameTree2(root1, root2))
 }
