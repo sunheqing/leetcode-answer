@@ -21,19 +21,14 @@ func maxDepth(root *TreeNode) int {
 	return 1 + rightChildDepth
 }
 
-// 二叉树的最大深度（非递归，借助一个队列）
+// 二叉树的最大深度（非递归，借助一个队列实现）
 func maxDepth2(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
 	maxDepthVal := 0
-	queue := []*TreeNode{root, nil}
+	queue := []*TreeNode{root, nil} // nil为每层结束的标志位
 	for len(queue) > 0 {
-		if queue[0] == nil { // 遇到层的结束标志位，树深加1
-			maxDepthVal = maxDepthVal + 1
-			queue = queue[1:]
-			continue
-		}
 		if queue[0].Left != nil {
 			queue = append(queue, queue[0].Left)
 		}
@@ -41,8 +36,12 @@ func maxDepth2(root *TreeNode) int {
 			queue = append(queue, queue[0].Right)
 		}
 		queue = queue[1:]
-		if queue[0] == nil && len(queue) > 1 { // 当前层结束了，为下一层添加标志位
-			queue = append(queue, nil)
+		if queue[0] == nil { // 当前层结束了
+			if len(queue) > 1 { // 还存在下一层待处理，为下一层添加标志位
+				queue = append(queue, nil)
+			}
+			maxDepthVal = maxDepthVal + 1 // 树深加1
+			queue = queue[1:]             // 去掉当前层标志位
 		}
 	}
 	return maxDepthVal
@@ -82,5 +81,6 @@ func main() {
 			},
 		},
 	}
+	fmt.Println(maxDepth(root))
 	fmt.Println(maxDepth2(root))
 }

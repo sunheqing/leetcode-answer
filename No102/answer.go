@@ -43,6 +43,33 @@ func levelOrder(root *TreeNode) [][]int {
 	return result
 }
 
+// 借助一个队列
+func levelOrder2(root *TreeNode) [][]int {
+	if root == nil {
+		return [][]int{}
+	}
+	result := [][]int{[]int{}} // nil为每层结束的标志位
+	queue := []*TreeNode{root, nil}
+	for len(queue) > 0 {
+		result[len(result)-1] = append(result[len(result)-1], queue[0].Val) // 保存当前层的结果
+		if queue[0].Left != nil {
+			queue = append(queue, queue[0].Left)
+		}
+		if queue[0].Right != nil {
+			queue = append(queue, queue[0].Right)
+		}
+		queue = queue[1:]
+		if queue[0] == nil { // 当前层结束了
+			if len(queue) > 1 { // 还存在下一层待处理，为下一层添加标志位以及存放结果的数组
+				queue = append(queue, nil)
+				result = append(result, []int{})
+			}
+			queue = queue[1:] // 去掉当前层标志位
+		}
+	}
+	return result
+}
+
 func main() {
 	root := &TreeNode{
 		Val: 1,
@@ -66,4 +93,5 @@ func main() {
 		},
 	}
 	fmt.Println(levelOrder(root))
+	fmt.Println(levelOrder2(root))
 }
