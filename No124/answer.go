@@ -1,12 +1,9 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 var tmpMax = -1001
 
-// 二叉树的最大路径和
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
@@ -26,6 +23,7 @@ func max(nums []int) int {
 	return max
 }
 
+// todo 二叉树的最大路径和
 func maxPathSum(root *TreeNode) int {
 	if root == nil {
 		return 0

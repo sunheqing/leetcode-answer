@@ -7,6 +7,7 @@ type mark struct {
 	num  int
 }
 
+// todo 直线上最多的点
 func maxPoints(points [][]int) int {
 	length := len(points)
 	if length <= 2 {
